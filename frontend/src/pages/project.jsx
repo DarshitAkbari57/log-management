@@ -142,6 +142,11 @@ const Project = () => {
       key: "category",
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+    },
+    {
       title: "Action",
       key: "action",
       render: (_, record) => (
@@ -160,6 +165,7 @@ const Project = () => {
       key: "title",
     },
     { title: "Assignee", dataIndex: "user", key: "user" },
+    { title: "Status", dataIndex: "status", key: "status" },
     {
       title: "Due Date",
       dataIndex: "dueDate",

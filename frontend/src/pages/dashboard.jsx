@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   const convertTime = (time) => {
     if (!time) {
-      return "0 hours 0 minutes"; // Default if no time is provided
+      return "0 h 0 m"; // Default if no time is provided
     }
 
     // Ensure the time is a valid string that can be split
@@ -23,7 +23,7 @@ const Dashboard = () => {
 
       // If split results are valid numbers, return formatted time
       if (!isNaN(hours) && !isNaN(minutes)) {
-        return `${hours} hours ${minutes} minutes`;
+        return `${hours} h ${minutes} m`;
       }
     }
 

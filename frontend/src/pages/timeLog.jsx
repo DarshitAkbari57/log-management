@@ -8,13 +8,22 @@ const TimeLog = () => {
   const dispatch = useDispatch();
   const timelog = useSelector((state) => state?.Timelog?.timelog);
 
-  const formattedTasks = timelog?.data?.map((timelog) => ({
-    key: timelog?._id, // Unique key for each timelog
-    taskName: timelog?.taskId?.title, // Project Category or Project Name
-    userName: `${timelog?.userId?.first_name} ${timelog?.userId?.last_name}`,
-    startTime: dayjs(timelog?.startTime).format("hh:mm:ss A DD-MM-YYYY"),
-    endTime: dayjs(timelog?.endTime).format("hh:mm:ss A DD-MM-YYYY"),
-  }));
+  const formattedTasks = timelog?.data?.map((timelog) => {
+    const start = dayjs(timelog?.startTime);
+    const end = dayjs(timelog?.endTime);
+    const durationInMinutes = end.diff(start, 'minutes'); // Calculate total difference in minutes
+    const hours = Math.floor(durationInMinutes / 60); // Convert minutes to hours
+    const minutes = durationInMinutes % 60; // Remaining minutes after hours
+  
+    return {
+      key: timelog?._id, // Unique key for each timelog
+      taskName: timelog?.taskId?.title, // Project Category or Project Name
+      userName: `${timelog?.userId?.first_name} ${timelog?.userId?.last_name}`,
+      timeDiff: `${hours}h ${minutes}m`, // Format as hours and minutes
+      startTime: start.format("hh:mm:ss A DD-MM-YYYY"),
+      endTime: end.format("hh:mm:ss A DD-MM-YYYY"),
+    };
+  });
 
   // Define the columns for the table
   const columns = [
@@ -27,6 +36,11 @@ const TimeLog = () => {
       title: "User Name",
       dataIndex: "userName", // Mapping this column to `userName` from the data
       key: "userName",
+    },
+    {
+      title: "Time",
+      dataIndex: "timeDiff", // Mapping this column to `startTime` from the data
+      key: "timeDiff",
     },
     {
       title: "Start Time",
